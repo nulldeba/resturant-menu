@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    Breadcrumb, BreadcrumbItem,
     Button, Row, Col, Label
 } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -86,7 +85,7 @@ class Contact extends Component {
     }
 
     render() {
-        const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
+        // const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
         const required = (val) => val && val.length;
         const maxLength = (len) => (val) => !(val) || (val.length <= len);
         const minLength = (len) => (val) => val && (val.length >= len);
