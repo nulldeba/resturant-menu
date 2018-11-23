@@ -35,44 +35,44 @@ class CommentForm extends React.Component {
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                 <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                 <ModalBody>
-                    <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                    <LocalForm onSubmit={(values) =>  this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)}>
                         <Row className="form-group">
                             <Label md={12} htmlFor="rating">rating</Label>
                             <Col md={12}>
-                                <Control.select model=".rating"  id="rating" className="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+                                <Control.select model=".rating" id="rating" className="form-control">
+                                    <option value={1}>1</option>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                    <option value={4}>4</option>
+                                    <option value={5}>5</option>
                                 </Control.select>
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Label htmlFor="author" md={12}> author name</Label>
                             <Col md={12}>
-                                <Control.text model=".author" id="author"  name="author" placeholder="author name" className="form-control"
-                                 validators={{
-                                    required, minLength: minLength(3), maxLength: maxLength(15)
-                                }}
+                                <Control.text model=".author" id="author" name="author" placeholder="author name" className="form-control"
+                                    validators={{
+                                        required, minLength: minLength(3), maxLength: maxLength(15)
+                                    }}
                                 />
-                                 <Errors
-                                        className="text-danger"
-                                        model=".author"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Required',
-                                            minLength: 'Must be greater than 2 characters',
-                                            maxLength: 'Must be 15 characters or less'
-                                        }}
-                                     />
+                                <Errors
+                                    className="text-danger"
+                                    model=".author"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 characters or less'
+                                    }}
+                                />
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Label htmlFor="comment" md={12}>comment</Label>
                             <Col md={12}>
                                 <Control.textarea model=".comment" rows={6} id="comment" name="comment" placeholder="comment" className="form-control" />
-                        </Col>
+                            </Col>
                         </Row>
                         <Row className="form-group">
                             <Col md={{ size: 10 }}>
@@ -87,7 +87,7 @@ class CommentForm extends React.Component {
         </div>);
     }
 }
-function RenderComments({ comments }) {
+function RenderComments({ comments, dishId, addComment }) {
     const monthNames = [
         "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
     ];
@@ -109,7 +109,7 @@ function RenderComments({ comments }) {
 
                 })
             }
-            <CommentForm />
+            <CommentForm dishId={dishId} addComment={addComment} />
         </div>);
     }
     else
@@ -149,7 +149,10 @@ const DishDetail = (props) => {
                         <RenderDish dish={props.dish} />
                     </div>
                     <div className="col-12 col-md m-1">
-                        <RenderComments comments={props.comments} />
+                        <RenderComments comments={props.comments}
+                            addComment={props.addComment}
+                            dishId={props.dish.id}
+                        />
                     </div>
                 </div>
             </div>
