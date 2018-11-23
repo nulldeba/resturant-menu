@@ -5,6 +5,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import Loading from './LoadingComponent';
 
 
 class CommentForm extends React.Component {
@@ -35,7 +36,7 @@ class CommentForm extends React.Component {
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                 <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                 <ModalBody>
-                    <LocalForm onSubmit={(values) =>  this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)}>
+                    <LocalForm onSubmit={(values) => this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)}>
                         <Row className="form-group">
                             <Label md={12} htmlFor="rating">rating</Label>
                             <Col md={12}>
@@ -130,7 +131,21 @@ function RenderDish({ dish }) {
 
 
 const DishDetail = (props) => {
-    if (props.dish != null)
+    if (props.isLoading == true) {
+        return (<div className="container">
+            <div className="row">
+                <Loading />
+            </div>
+        </div>)
+    }
+    else if (props.errorMessage) {
+        return (<div className="container">
+            <div className="row">
+                <h4>{props.errorMessage}</h4>
+            </div>
+        </div>)
+    }
+    else if (props.dish != null)
         return (
             <div className="container">
                 <div className="row">
