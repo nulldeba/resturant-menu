@@ -10,9 +10,11 @@ import About from './AboutComponent';
 import Contact from './ContactComponent';
 import { actions } from 'react-redux-form';
 import { addComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postComment } from '../redux/ActionsCreators';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 
 class Main extends Component {
- 
+
   componentDidMount() {
     this.props.fetchDishes();
     this.props.fetchComments();
@@ -51,15 +53,19 @@ class Main extends Component {
     return (
       <div >
         <Header />
-        <Switch>
-          <Route path='/home' component={HomePage} />
-          <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes.dishes} isLoading={this.props.dishes.isLoading}
-            errorMessage={this.props.dishes.errorMessages} />} />
-          <Route path='/menu/:dishId' component={DishWithId} />
-          <Route path='/aboutus' component={() => <About leaders={this.props.leaders.leaders} />} />
-          <Route path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
-          <Redirect to="/home" />
-        </Switch>
+        <TransitionGroup>
+          <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+            <Switch location={this.props.location}>
+              <Route path='/home' component={HomePage} />
+              <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes.dishes} isLoading={this.props.dishes.isLoading}
+                errorMessage={this.props.dishes.errorMessages} />} />
+              <Route path='/menu/:dishId' component={DishWithId} />
+              <Route path='/aboutus' component={() => <About leaders={this.props.leaders.leaders} />} />
+              <Route path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
+              <Redirect to="/home" />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
         <Footer />
       </div>
     );
@@ -81,7 +87,7 @@ const mapDispatchToProps = dispatch => ({
   resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
-  fetchLeaders:()=>dispatch(fetchLeaders()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment))
 });
 
