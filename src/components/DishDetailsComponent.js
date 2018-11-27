@@ -37,7 +37,7 @@ class CommentForm extends React.Component {
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                 <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                 <ModalBody>
-                    <LocalForm onSubmit={(values) => this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)}>
+                    <LocalForm onSubmit={(values) =>  this.props.postComment(this.props.dishId, values.rating, values.author, values.comment)}>
                         <Row className="form-group">
                             <Label md={12} htmlFor="rating">rating</Label>
                             <Col md={12}>
@@ -89,7 +89,7 @@ class CommentForm extends React.Component {
         </div>);
     }
 }
-function RenderComments({ comments, dishId, addComment }) {
+function RenderComments({ comments, dishId,  postComment }) {
     const monthNames = [
         "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
     ];
@@ -111,7 +111,7 @@ function RenderComments({ comments, dishId, addComment }) {
 
                 })
             }
-            <CommentForm dishId={dishId} addComment={addComment} />
+            <CommentForm dishId={dishId} postComment={postComment} />
         </div>);
     }
     else
@@ -166,7 +166,7 @@ const DishDetail = (props) => {
                     </div>
                     <div className="col-12 col-md m-1">
                         <RenderComments comments={props.comments}
-                            addComment={props.addComment}
+                            postComment={props.postComment}
                             dishId={props.dish.id}
                         />
                     </div>
