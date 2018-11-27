@@ -9,7 +9,7 @@ import DishDetail from './DishDetailsComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
 import { actions } from 'react-redux-form';
-import { addComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postComment } from '../redux/ActionsCreators';
+import { addComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postComment, postFeedback } from '../redux/ActionsCreators';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
@@ -61,7 +61,7 @@ class Main extends Component {
                 errorMessage={this.props.dishes.errorMessages} />} />
               <Route path='/menu/:dishId' component={DishWithId} />
               <Route path='/aboutus' component={() => <About leaders={this.props.leaders.leaders} />} />
-              <Route path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
+              <Route path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
               <Redirect to="/home" />
             </Switch>
           </CSSTransition>
@@ -88,7 +88,8 @@ const mapDispatchToProps = dispatch => ({
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
   fetchLeaders: () => dispatch(fetchLeaders()),
-  postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment))
+  postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
+  postFeedback:(feedback)=>dispatch(postFeedback(feedback))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

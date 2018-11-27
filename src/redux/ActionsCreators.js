@@ -84,30 +84,30 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
         comment: comment
     };
     newComment.date = new Date().toISOString();
-    
+
     return fetch(baseUrl + 'comments', {
         method: "POST",
         body: JSON.stringify(newComment),
         headers: {
-          "Content-Type": "application/json"
+            "Content-Type": "application/json"
         },
         credentials: "same-origin"
     })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            throw error;
-      })
-    .then(response => response.json())
-    .then(response => dispatch(addComment(response)))
-    .catch(error =>  { console.log('post comments', error.message); alert('Your comment could not be posted\nError: '+error.message); });
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                throw error;
+            })
+        .then(response => response.json())
+        .then(response => dispatch(addComment(response)))
+        .catch(error => { console.log('post comments', error.message); alert('Your comment could not be posted\nError: ' + error.message); });
 };
 
 
@@ -152,9 +152,6 @@ export const leadersLoading = () => ({
     type: ActionTypes.LEADERS_LOADING
 });
 
-
-
-
 export const fetchPromos = () => (dispatch) => {
 
     dispatch(promosLoading());
@@ -188,4 +185,25 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
+export const postFeedback = (feedback) => () => {
+
+    const newFeedback = {
+        firstname: feedback.firstname,
+        lastname: feedback.lastname,
+        telnum: feedback.telnum,
+        email: feedback.email,
+        agree: feedback.agree,
+        contactType: feedback.contactType,
+        message: feedback.message
+
+    }
+    return fetch(baseUrl + 'feedback', {
+        method: 'post',
+        body: JSON.stringify(newFeedback),
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+}
 
