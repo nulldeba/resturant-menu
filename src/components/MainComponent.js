@@ -26,7 +26,7 @@ class Main extends Component {
         <Home
           dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
           dishesLoading={this.props.dishes.isLoading}
-          dishesErrorMessages={this.props.dishes.errorMessages}
+          dishesErrorMessages={this.props.dishes.errorMessage}
           promotion={this.props.promotions.promotions.filter((promo) => promo.featured)[0]}
           promoLoading={this.props.promotions.isLoading}
           promoErrMess={this.props.promotions.errorMessege}
@@ -55,7 +55,7 @@ class Main extends Component {
           <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes.dishes} isLoading={this.props.dishes.isLoading}
             errorMessage={this.props.dishes.errorMessages} />} />
           <Route path='/menu/:dishId' component={DishWithId} />
-          <Route path='/aboutus' component={() => <About leaders={this.props.leaders} />} />
+          <Route path='/aboutus' component={() => <About leaders={this.props.leaders.leaders} />} />
           <Route path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
           <Redirect to="/home" />
         </Switch>
