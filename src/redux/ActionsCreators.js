@@ -205,5 +205,7 @@ export const postFeedback = (feedback) => () => {
         },
         credentials: "same-origin"
     })
+    .then(response=>response.json())
+    .then(response=>alert('Thank you for your feedback \n'+JSON.stringify(response)))
 }
 
