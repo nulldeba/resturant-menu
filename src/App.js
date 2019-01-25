@@ -7,6 +7,18 @@ import { ConfigureStore } from './redux/configureStore';
 
 const store = ConfigureStore();
 class App extends Component {
+  componentDidMount()
+  {
+    let images;
+    fetch('http://starlord.hackerearth.com/insta')
+    .then(result=>result.json())
+    .then((result,value)=>{
+      debugger
+            images=result;
+            console.log(result);
+            localStorage.setItem("images",images)
+    });
+  }
   render() {
     return (
       <Provider store={store}>

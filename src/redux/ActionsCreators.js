@@ -205,7 +205,20 @@ export const postFeedback = (feedback) => () => {
         },
         credentials: "same-origin"
     })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+        error => {
+            throw error;
+        })
     .then(response=>response.json())
     .then(response=>alert('Thank you for your feedback \n'+JSON.stringify(response)))
+    .catch(error => { console.log('post feedbacks', error.message); alert('Your Feedback could not be posted\nError: ' + error.message); });
 }
 

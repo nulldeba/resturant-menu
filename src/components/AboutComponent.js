@@ -5,18 +5,18 @@ import { baseUrl } from '../shared/BaseUrl';
 import { Fade, Stagger } from 'react-animation-components';
 import Loading from './LoadingComponent';
 
-function RenderLeader({ leader }) {
+function RenderLeader(props) {
 
     return (
         <div className="col-12 mt-5">
             <Media tag="li">
                 <Media left middle>
-                    <Media object src={baseUrl + leader.image} alt={leader.name} />
+                    <Media object src={baseUrl + props.leader.image} alt={props.leader.name} />
                 </Media>
                 <Media body className="ml-5">
-                    <Media heading>{leader.name}</Media>
-                    <h6>{leader.designation}</h6>
-                    <p>{leader.description}</p>
+                    <Media heading>{props.leader.name}</Media>
+                    <h6>{props.leader.designation}</h6>
+                    <p>{props.leader.description}</p>
                 </Media>
             </Media>
         </div>);
